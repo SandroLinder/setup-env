@@ -1,27 +1,14 @@
 #!/usr/bin/env bash
 
-version="0.13.0"
-
-if [ ! -z $ZIG_VERSION ]; then
-    version="$ZIG_VERSION"
-fi
-
-echo "Installing version $version of zig"
-
 if [ -d $HOME/Documents/tools/zig ]; then
     sudo rm -r $HOME/Documents/tools/zig
+    sudo rm /usr/local/bin/zig
 fi
 
-git clone git@github.com:ziglang/zig.git $HOME/Documents/tools/zig
+mkdir $HOME/Documents/tools/zig
+curl -o $HOME/Documents/tools/zig/zig.tar.xz https://ziglang.org/download/0.13.0/zig-linux-x86-0.13.0.tar.xz
 
-git -C $HOME/Documents/tools/zig fetch --all
-git -C $HOME/Documents/tools/zig checkout $version
+tar -xf $HOME/Documents/tools/zig/zig.tar.xz -C $HOME/Documents/tools/zig
+rm $HOME/Documents/tools/zig/zig.tar.xz
 
-mkdir $HOME/Documents/tools/zig/build
-
-(
-    cd $HOME/Documents/tools/zig/build
-    cmake ..
-    sudo make install
-)
-
+sudo cp $HOME/Documents/tools/zig/zig-linux-x86-0.13.0/zig /usr/local/bin/zig
