@@ -9,7 +9,7 @@ fi
 echo "Installing version $version of ghostty"
 
 if [ -d $HOME/Documents/tools/ghostty ]; then
-    rm -r $HOME/Documents/tools/ghostty
+    sudo rm -r $HOME/Documents/tools/ghostty
 fi
 
 git clone git@github.com:ghostty-org/ghostty.git $HOME/Documents/tools/ghostty
@@ -17,4 +17,7 @@ git clone git@github.com:ghostty-org/ghostty.git $HOME/Documents/tools/ghostty
 git -C $HOME/Documents/tools/ghostty fetch --all
 git -C $HOME/Documents/tools/ghostty checkout $version
 
-
+(
+    cd $HOME/Documents/tools/ghostty/
+    nice zig build -p $HOME/.local -Doptimize=ReleaseFast
+)
